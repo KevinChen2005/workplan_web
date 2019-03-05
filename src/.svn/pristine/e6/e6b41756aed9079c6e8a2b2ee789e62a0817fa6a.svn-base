@@ -1,0 +1,100 @@
+
+
+page{
+   background-image:url('http://114.116.76.195:81/imgurl-master/upload/1812/4c5f802fe139f0f9.png');
+   background-size: 100% 100%;
+   height: 100%;
+   width: 100%;
+}
+
+.index{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    background: white;
+}
+
+.tasktitle{
+    width: 100%;
+    height: 100px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom:9px;
+
+}
+
+.card{
+    margin-bottom: 10px;
+}
+
+.addmodel{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column
+}
+
+.delmode{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+    flex-direction: column
+}
+
+.addcontextarea{
+    width: 100%;
+    
+}
+
+
+.lockview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    padding: 0 0  !important;
+}
+
+.timeline{
+    margin: 0 30px ;
+}
+
+.addbutton{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}
+
+.addincident{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputincident{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.inputincidenttap{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap:wrap;
+}
+
+.includetap{
+    margin: 5px 5px;
+}

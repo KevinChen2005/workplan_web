@@ -1,0 +1,29 @@
+page{
+    background-image: url('http://114.116.76.195:81/imgurl-master/upload/1812/4c5f802fe139f0f9.png');
+    background-size: 100% 100%;
+    height: 100%;
+    widows: 100%;
+}
+
+.index{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+   align-items: center;
+}
+
+.icon{
+    margin-top: 300px;
+}
+
+.formstyle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+    height: 200px;
+    width: 400px;
+
+}

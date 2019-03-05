@@ -1,0 +1,265 @@
+
+
+page{
+   background-image:url('http://114.116.76.195:81/imgurl-master/upload/1812/4c5f802fe139f0f9.png');
+   background-size: 100% 100%;
+   height: 100%;
+   width: 100%;
+}
+
+.index{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.title{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: white;
+    width: 100%;
+
+    .userinfo{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+
+.touxiang{
+    margin: 10px 0px ;
+}
+
+.username{
+    color: black;
+}
+
+.currenttime{
+    font-size: 25px;
+    color: black;
+    font-weight: 500;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+.atheight{
+    width: 100%;
+}
+
+.table{
+    display: flex;
+    width: 360*6px;
+    align-items: center;
+    flex-direction: column;
+   
+}
+
+.tabletitle{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 360*6px;
+}
+
+.timelist{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.itemtitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 360px;
+    height: 50px;
+    background: white;
+    border-left: 1px solid  black;
+    border-bottom: 1px solid  black;
+    border-top: 1px solid  black;
+    
+}
+
+.itemcontext{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 360px;
+    background: white;
+    border-left: 1px solid  black;
+    border-top: 1px solid  black;
+    height: 50px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    
+}
+
+.itemcontext1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 360px;
+    background: white;
+    height: 50px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.noleftline{
+    border-left: none;
+}
+
+
+.itemtitleplus{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    margin-left:-1px;
+}
+
+
+.scrollview{
+    border-left: 1px solid  black;
+}
+.scrollview1{
+    border-left: 1px solid  black;
+    width:90px;
+    height:50px;
+    border-right: 1px solid  black;
+}
+
+.logcontext{
+    display:flex ;
+    flex-direction: row;
+
+}
+
+.timelistscroll{
+    width: 90px；
+}
+
+.timelistview{
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+ 
+}
+
+.test1{
+   margin-top: 0px;
+}
+
+.text2{
+    width: 360px;
+    text-align: center;
+}
+
+.task{
+    display: flex;
+    align-items: center;
+}
+
+.delmode{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+    flex-direction: column
+}
+
+
+.itemtitle1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 90px;
+    height: 50px;
+    background: white;
+    border-left: 1px solid  black;
+    border-bottom: 1px solid  black;
+    border-top: 1px solid  black;
+    
+}
+
+.itemcontext1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 90px;
+    background: white;
+    border-left: 1px solid  black;
+    border-top: 1px solid  black;
+    height: 50px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.maintask{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background: white;
+}
+
+.maintaskempty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: white;
+    height: 150px;
+}
+
+
+
+.maintaskscroll{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 150px;
+    background: white;
+}
+
+.maintaskitem{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    margin: 0 10px 0 10px ;
+
+}
+
+.tasktitle{
+    font-size: 15px;
+    width: 20%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.addcontextarea{
+    width: 100%;
+}
