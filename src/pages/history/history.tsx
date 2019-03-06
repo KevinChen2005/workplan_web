@@ -111,7 +111,8 @@ export default class Index extends Component {
   componentDidShow () {
     this.state.time=this.$router.params.date
     this.state.current_today = this.$router.params.today
-    console.log(this.state.current_today)
+    console.log('current date = ' + this.state.current_today)
+    console.log('select date = ' + this.state.time)
     this.pulldata(this.$router.params.date)
   }
     
@@ -120,7 +121,7 @@ export default class Index extends Component {
   }
 
   pulldata(time){
-    console.log(time);
+    console.log('history pulldata time='+time);
       Taro.request({
         url:url.locality_address+'/v1/work/notes',
         data:{

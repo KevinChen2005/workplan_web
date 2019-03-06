@@ -57,11 +57,25 @@ export default class Index extends Component {
     current: 2,
     currentdate:0,
     current_today:'',
+    
     onedayago:'',
     twodayago:'',
+
+    today_is_edit:false,
+    today_data_use:[],
+    today_data_full:[],
     today_data:[], 
+
+    onedayago_is_edit:false,
+    onedayago_data_use:[],
+    onedayago_data_full:[],
     onedayago_data:[],
+
+    twodayago_is_edit:false,
+    twodayago_data_use:[],
+    twodayago_data_full:[],
     twodayago_data:[],
+
     today_ext: {
       id: '1',
       daily_sum: '',
@@ -306,6 +320,7 @@ export default class Index extends Component {
       (timest)=>{
         this.setState({
           current_today:this.timedaty_m_d(timest),
+          selectdate: this.timedaty_m_d(timest), //默认选择为今天
           onedayago:this.timedaty_m_d((timest-86400000)),
           twodayago:this.timedaty_m_d((timest-86400000*2)),
           endtime:this.endtime(timest)
@@ -323,11 +338,27 @@ export default class Index extends Component {
           date:timearray[0]
         }
       }).then((res)=>{
-        console.log(res.data.success_msg.info);
-         this.setState({
-          today_data:res.data.success_msg.info,
+        let dataTemp = [];
+        res.data.success_msg.info.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTemp.push(item);
+        });
+        this.setState({
+          today_data_use: dataTemp,
+          today_data: dataTemp,
+          today_data_full: res.data.success_msg.info,
           today_ext: res.data.success_msg.ext,
-         })
+        })
       })
       return timearray
     }).then((timearray)=>{
@@ -340,10 +371,27 @@ export default class Index extends Component {
           date:timearray[1]
         }
       }).then((res)=>{
+        let dataTempOne = [];
+        res.data.success_msg.info.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTempOne.push(item);
+        });
          this.setState({
-          onedayago_data:res.data.success_msg.info,
+          onedayago_data_use: dataTempOne,
+          onedayago_data:dataTempOne,
+          onedayago_data_full: res.data.success_msg.info,
           onedayago_ext: res.data.success_msg.ext,
-         })
+        })
       })
       return timearray
     }).then((timearray)=>{
@@ -356,11 +404,27 @@ export default class Index extends Component {
           date:timearray[2]
         }
       }).then((res)=>{
-         this.setState({
-          twodayago_data:res.data.success_msg.info,
-          twodayago_ext: res.data.success_msg.ext,
-         })
-         console.log(res.data.success_msg.info)
+        let dataTempTwo = [];
+        res.data.success_msg.info.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTempTwo.push(item);
+        });
+      this.setState({
+        twodayago_data_use: dataTempTwo,
+        twodayago_data: dataTempTwo,
+        twodayago_data_full: res.data.success_msg.info,
+        twodayago_ext: res.data.success_msg.ext,
+      })
       })
       return timearray
     })
@@ -371,9 +435,9 @@ export default class Index extends Component {
     
     const tabList = [{ title:this.state.twodayago }, { title: this.state.onedayago}, { title:this.state.current_today}]
     let {itemtitles} = this.state
-    let today_data = this.state.today_data
-    let onedayago_data = this.state.onedayago_data
-    let twodayago_data = this.state.twodayago_data
+    let today_data = this.state.today_data_use
+    let onedayago_data = this.state.onedayago_data_use
+    let twodayago_data = this.state.twodayago_data_use
     let today_ext = this.state.today_ext
     let onedayago_ext = this.state.onedayago_ext
     let twodayago_ext = this.state.twodayago_ext
@@ -870,7 +934,7 @@ let context2 = <View className='logcontext' >
 
 
   updateinput(scope,e){
-    console.log(e);
+    console.log('updateinput-'+e);
     let targetid = e.target.id
     let param  = targetid.split('@@')
     console.log(param)
@@ -912,36 +976,8 @@ let context2 = <View className='logcontext' >
       header:{  "Content-Type": "application/x-www-form-urlencoded"}
    }).then((res)=>{
     //更改现有数据
-    switch(this.state.current){
-        case 0:
-        let twodayago_data = this.state.twodayago_data
-        for(let i = 0;i< twodayago_data.length;i++){
-          if(twodayago_data[i].id==res.data.result.wid){
-            twodayago_data[i][res.data.result.field] = res.data.result.val;
-          }
-        }
-        break;
-        case 1:
-        let onedayago_data = this.state.onedayago_data
-        for(let i = 0;i< onedayago_data.length;i++){
-          if(onedayago_data[i].id==res.data.result.wid){
-            onedayago_data[i][res.data.result.field] = res.data.result.val;
-          }
-        }
-        break;
-        case 2:
-        let today_data_temp = this.state.today_data
-          for(let i = 0;i< today_data_temp.length;i++){
-            if(today_data_temp[i].id==res.data.result.wid){
-              today_data_temp[i][res.data.result.field] = res.data.result.val;
-            }
-          }
-        break;
-    }
-
-}) 
-
-
+    this.updatePageData(res);
+   }) 
   }
 
   onCategoryChange(e){
@@ -961,32 +997,7 @@ let context2 = <View className='logcontext' >
       header:{  "Content-Type": "application/x-www-form-urlencoded"}
       }).then((res)=>{
         //更改现有数据
-        switch(this.state.current){
-            case 0:
-            let twodayago_data = this.state.twodayago_data
-            for(let i = 0;i< twodayago_data.length;i++){
-              if(twodayago_data[i].id==res.data.result.wid){
-                twodayago_data[i][res.data.result.field] = res.data.result.val;
-              }
-            }
-            break;
-            case 1:
-            let onedayago_data = this.state.onedayago_data
-            for(let i = 0;i< onedayago_data.length;i++){
-              if(onedayago_data[i].id==res.data.result.wid){
-                onedayago_data[i][res.data.result.field] = res.data.result.val;
-              }
-            }
-            break;
-            case 2:
-            let today_data_temp = this.state.today_data
-              for(let i = 0;i< today_data_temp.length;i++){
-                if(today_data_temp[i].id==res.data.result.wid){
-                  today_data_temp[i][res.data.result.field] = res.data.result.val;
-                }
-              }
-            break;
-        }
+        this.updatePageData(res);
     }) 
   }
 
@@ -1007,34 +1018,93 @@ let context2 = <View className='logcontext' >
       method:'POST',
       header:{  "Content-Type": "application/x-www-form-urlencoded"}
       }).then((res)=>{
-        //更改现有数据
-        switch(this.state.current){
-            case 0:
-            let twodayago_data = this.state.twodayago_data
-            for(let i = 0;i< twodayago_data.length;i++){
-              if(twodayago_data[i].id==res.data.result.wid){
-                twodayago_data[i][res.data.result.field] = res.data.result.val;
-              }
-            }
-            break;
-            case 1:
-            let onedayago_data = this.state.onedayago_data
-            for(let i = 0;i< onedayago_data.length;i++){
-              if(onedayago_data[i].id==res.data.result.wid){
-                onedayago_data[i][res.data.result.field] = res.data.result.val;
-              }
-            }
-            break;
-            case 2:
-            let today_data_temp = this.state.today_data
-              for(let i = 0;i< today_data_temp.length;i++){
-                if(today_data_temp[i].id==res.data.result.wid){
-                  today_data_temp[i][res.data.result.field] = res.data.result.val;
-                }
-              }
-            break;
-        }
+        this.updatePageData(res);
     }) 
+  }
+
+  updatePageData(res)
+  {
+    //更改现有数据
+    switch(this.state.current){
+      case 0:
+      {
+        let twodayago_data = this.state.twodayago_data_full
+        for(let i = 0;i< twodayago_data.length;i++){
+          if(twodayago_data[i].id==res.data.result.wid){
+            twodayago_data[i][res.data.result.field] = res.data.result.val;
+          }
+        }
+        let dataTemp = [];
+        twodayago_data.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTemp.push(item);
+        });
+        this.state.twodayago_data = dataTemp;
+      }
+      break;
+      case 1:
+      {
+        let onedayago_data = this.state.onedayago_data_full
+        for(let i = 0;i< onedayago_data.length;i++){
+          if(onedayago_data[i].id==res.data.result.wid){
+            onedayago_data[i][res.data.result.field] = res.data.result.val;
+          }
+        }
+        let dataTemp = [];
+        onedayago_data.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTemp.push(item);
+        });
+        this.state.onedayago_data = dataTemp;
+      }
+      break;
+      case 2:
+      {
+        let today_data_temp = this.state.today_data_full
+        for(let i = 0;i< today_data_temp.length;i++){
+          if(today_data_temp[i].id==res.data.result.wid){
+            today_data_temp[i][res.data.result.field] = res.data.result.val;
+          }
+        }
+        let dataTemp = [];
+        today_data_temp.map((item)=>{
+          if (
+            (item.length_time == null || item.length_time == '') && 
+            (item.category == null || item.category == '') && 
+            (item.work_project == null || item.work_project == '') && 
+            (item.work_content == null || item.work_content == '') && 
+            (item.work_efficiency == null || item.work_efficiency == 0) && 
+            (item.work_effect == null || item.work_effect == 0) && 
+            (item.work_myself == null || item.work_myself == 0) 
+          ) {
+            return;
+          }
+          dataTemp.push(item);
+        });
+        this.state.today_data = dataTemp;
+      }
+      break;
+    }
   }
 
   //修改自评文本
@@ -1089,62 +1159,63 @@ let context2 = <View className='logcontext' >
           
       }
 
-      if($('#departmentselect').val()=='-请选择-'){
+      let dep = $('#departmentselect').val();
+
+      if(dep=='-请选择-'){
         Taro.showToast({
           title:'请选择部门!',
           icon:'none'
-        })
-        return
-      
-  }
-
-      Taro.request({
-        url:url.locality_address+'/v1/work/phone-login',
-        data:{
-          username:this.state.username,
-          phone:this.state.phone,
-          scene:'web',
-          department:$('#departmentselect').val()
-        },
-        method:'POST',
-        header:{  "Content-Type": "application/x-www-form-urlencoded"}
-       }).then((res)=>{
-         if(res.data.code==200){
-          Taro.setStorageSync('username',this.state.username)
-          Taro.setStorageSync('phone',this.state.phone)
-          Taro.setStorageSync('register',{msg:'success',state:true})
-          Taro.setStorageSync('department',$('#departmentselect').val())
-          this.setState({
-            register:{msg:'success',state:true},
-            mydepartment:$('#departmentselect').val()
-          })
-          Taro.showLoading({
-            title:'请稍后',
-            mask:true,
-          })
-          setTimeout(() => {
-            Taro.hideLoading()
-            this.setState({
-              showloginmodel:false
-            })
-            this.pullmaintask()
-            this.pulldata()
-          }, 1000); 
- 
-        }else{
-          Taro.showToast({
-            title:'网络出错！',
-            icon:'none'
-          })
-        }
-        }).catch((res)=>{
-          Taro.showToast({
-            title:'网络出错！',
-            icon:'none'
-          })
-        })
-
+      })
+      return
     }
+
+    Taro.request({
+      url:url.locality_address+'/v1/work/phone-login',
+      data:{
+        username:this.state.username,
+        phone:this.state.phone,
+        scene:'web',
+        department:dep
+      },
+      method:'POST',
+      header:{  "Content-Type": "application/x-www-form-urlencoded"}
+      }).then((res)=>{
+        if(res.data.code==200){
+        Taro.setStorageSync('username',this.state.username)
+        Taro.setStorageSync('phone',this.state.phone)
+        Taro.setStorageSync('register',{msg:'success',state:true})
+        Taro.setStorageSync('department',$('#departmentselect').val())
+        this.setState({
+          register:{msg:'success',state:true},
+          mydepartment:$('#departmentselect').val()
+        })
+        Taro.showLoading({
+          title:'请稍后',
+          mask:true,
+        })
+        setTimeout(() => {
+          Taro.hideLoading()
+          this.setState({
+            showloginmodel:false
+          })
+          this.pullmaintask()
+          this.pulldata()
+        }, 1000); 
+
+      }else{
+        Taro.showToast({
+          title:'网络出错！- '+res.data.code,
+          icon:'none'
+        })
+      }
+    }).catch((res)=>{
+      Taro.showToast({
+        title:'网络出错！'+res.data.code,
+        icon:'none'
+      })
+    })
+
+  }
 
   }
 
@@ -1259,32 +1330,7 @@ let context2 = <View className='logcontext' >
             header:{  "Content-Type": "application/x-www-form-urlencoded"}
         }).then((res)=>{
             //更改现有数据
-            switch(this.state.current){
-                case 0:
-                let twodayago_data = this.state.twodayago_data
-                for(let i = 0;i< twodayago_data.length;i++){
-                  if(twodayago_data[i].id==res.data.result.wid){
-                    twodayago_data[i][res.data.result.field] = res.data.result.val;
-                  }
-                }
-                break;
-                case 1:
-                let onedayago_data = this.state.onedayago_data
-                for(let i = 0;i< onedayago_data.length;i++){
-                  if(onedayago_data[i].id==res.data.result.wid){
-                    onedayago_data[i][res.data.result.field] = res.data.result.val;
-                  }
-                }
-                break;
-                case 2:
-                let today_data_temp = this.state.today_data
-                  for(let i = 0;i< today_data_temp.length;i++){
-                    if(today_data_temp[i].id==res.data.result.wid){
-                      today_data_temp[i][res.data.result.field] = res.data.result.val;
-                    }
-                  }
-                break;
-            }
+            this.updatePageData(res);
 
             this.setState({
             showmodel:false,
@@ -1337,6 +1383,46 @@ let context2 = <View className='logcontext' >
       setTimeout(() => {
         // this.flushhight()
       }, 700);
+
+      switch (this.state.current) {
+        case 0:
+        this.state.twodayago_is_edit = !this.state.twodayago_is_edit;
+          if (this.state.twodayago_is_edit) {
+            this.setState({
+              twodayago_data_use: this.state.twodayago_data_full
+            }) 
+          } else {
+            this.setState({
+              twodayago_data_use: this.state.twodayago_data
+            }) 
+          }
+          
+          break;
+        case 1:
+          this.state.onedayago_is_edit = !this.state.onedayago_is_edit;
+          if (this.state.onedayago_is_edit) {
+            this.setState({
+              onedayago_data_use: this.state.onedayago_data_full
+            }) 
+          } else {
+            this.setState({
+              onedayago_data_use: this.state.onedayago_data
+            }) 
+          }
+          break;
+        case 2:
+          this.state.today_is_edit = !this.state.today_is_edit;
+          if (this.state.today_is_edit) {
+            this.setState({
+              today_data_use: this.state.today_data_full
+            }) 
+          } else {
+            this.setState({
+              today_data_use: this.state.today_data
+            }) 
+          }
+         break;
+      }
       
   }
   
@@ -1428,32 +1514,87 @@ let context2 = <View className='logcontext' >
       //更改现有数据
       switch(this.state.current){
           case 0:
-          let twodayago_data = this.state.twodayago_data
-          for(let i = 0;i< twodayago_data.length;i++){
-            if(twodayago_data[i].id==this.state.targhtid[1]){
-              console.log('1111'+twodayago_data[i][this.state.targhtid[0]])
-              twodayago_data[i][this.state.targhtid[0]] = this.state.value;
+          {
+            let twodayago_data = this.state.twodayago_data_full
+            for(let i = 0;i< twodayago_data.length;i++){
+              if(twodayago_data[i].id==this.state.targhtid[1]){
+                console.log('1111'+twodayago_data[i][this.state.targhtid[0]])
+                twodayago_data[i][this.state.targhtid[0]] = this.state.value;
+              }
             }
+            let dataTemp = [];
+            twodayago_data.map((item)=>{
+              if (
+                (item.length_time == null || item.length_time == '') && 
+                (item.category == null || item.category == '') && 
+                (item.work_project == null || item.work_project == '') && 
+                (item.work_content == null || item.work_content == '') && 
+                (item.work_efficiency == null || item.work_efficiency == 0) && 
+                (item.work_effect == null || item.work_effect == 0) && 
+                (item.work_myself == null || item.work_myself == 0) 
+              ) {
+                return;
+              }
+              dataTemp.push(item);
+            });
+            this.state.twodayago_data = dataTemp;
           }
           break;
           case 1:
-          let onedayago_data = this.state.onedayago_data
-          for(let i = 0;i< onedayago_data.length;i++){
-            if(onedayago_data[i].id==this.state.targhtid[1]){
-              console.log('1111'+onedayago_data[i][this.state.targhtid[0]])
-              onedayago_data[i][this.state.targhtid[0]] = this.state.value;
+          {
+            let onedayago_data = this.state.onedayago_data_full
+            for(let i = 0;i< onedayago_data.length;i++){
+              if(onedayago_data[i].id==this.state.targhtid[1]){
+                console.log('1111'+onedayago_data[i][this.state.targhtid[0]])
+                onedayago_data[i][this.state.targhtid[0]] = this.state.value;
+              }
             }
+            let dataTemp = [];
+            onedayago_data.map((item)=>{
+              if (
+                (item.length_time == null || item.length_time == '') && 
+                (item.category == null || item.category == '') && 
+                (item.work_project == null || item.work_project == '') && 
+                (item.work_content == null || item.work_content == '') && 
+                (item.work_efficiency == null || item.work_efficiency == 0) && 
+                (item.work_effect == null || item.work_effect == 0) && 
+                (item.work_myself == null || item.work_myself == 0) 
+              ) {
+                return;
+              }
+              dataTemp.push(item);
+            });
+            this.state.onedayago_data = dataTemp;
           }
           break;
           case 2:
-          let today_data_temp = this.state.today_data
+          {
+            let today_data_temp = this.state.today_data_full
             for(let i = 0;i< today_data_temp.length;i++){
               if(today_data_temp[i].id==this.state.targhtid[1]){
                 console.log('1111'+today_data_temp[i][this.state.targhtid[0]])
                 today_data_temp[i][this.state.targhtid[0]] = this.state.value;
               }
             }
-           
+
+            let dataTemp = [];
+            today_data_temp.map((item)=>{
+              if (
+                (item.length_time == null || item.length_time == '') && 
+                (item.category == null || item.category == '') && 
+                (item.work_project == null || item.work_project == '') && 
+                (item.work_content == null || item.work_content == '') && 
+                (item.work_efficiency == null || item.work_efficiency == 0) && 
+                (item.work_effect == null || item.work_effect == 0) && 
+                (item.work_myself == null || item.work_myself == 0) 
+              ) {
+                return;
+              }
+              dataTemp.push(item);
+            });
+            this.state.today_data = dataTemp;
+            console.log('today_data.length='+dataTemp.length);
+          }
           break;
       }
 
