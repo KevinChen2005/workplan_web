@@ -89,7 +89,7 @@ export default class Index extends Component {
       daily_sum: '',
     },
     categorys: ['开拓', '驱动', '实施', '维护', "协同"],
-    itemtitles:['时长(分)','类别','工作项目','工作内容及说明','效率自评','对应目标','驱动自评'],
+    itemtitles:['时长(分)',/*'类别',*/'工作项目','工作内容及说明','效率自评','对应目标','驱动自评'],
     moment:['9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00'],
     showmodel:false,
     modeldatatitle:'标题',
@@ -97,7 +97,7 @@ export default class Index extends Component {
     idMname:{
       work_start_time:'开始时间',
       length_time:'时长(分)',
-      category:'类别',
+      // category:'类别',
       work_project:'工作项目',
       work_content:'工作内容及说明',
       work_efficiency:'效率自评',
@@ -461,7 +461,7 @@ export default class Index extends Component {
          </View>
 
          {/* 类别 */}
-        <View id={'category@@' + item.id} className='itemcontext'>
+        {/* <View id={'category@@' + item.id} className='itemcontext'>
           <select id={'category@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
             <option value="">---</option>
             {
@@ -470,6 +470,17 @@ export default class Index extends Component {
                 { if (item.category == cate) return <option value={cate} selected>{cate}</option>  }
               })
             }   
+          </select>
+        </View> */}
+        <View id={'work_effect@@'+item.id}   className='itemcontext'>
+          <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
+            <option value="">---</option>
+            {
+              this.state.maintask.map((itemTask)=>{
+                { if (item.work_effect != itemTask.title) return <option value={itemTask.title}>{itemTask.title}</option>  }
+                { if (item.work_effect == itemTask.title) return <option value={itemTask.title} selected>{itemTask.title}</option>  }
+              })
+            }    
           </select>
         </View>
 
@@ -494,7 +505,7 @@ export default class Index extends Component {
           </select>
         </View>
 
-         <View id={'work_effect@@'+item.id}   className='itemcontext'>
+         {/* <View id={'work_effect@@'+item.id}   className='itemcontext'>
           <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
             <option value="">---</option>
             {
@@ -504,7 +515,7 @@ export default class Index extends Component {
               })
             }    
           </select>
-        </View>
+        </View> */}
 
 
          <View id={'work_myself@@' + item.id} className='itemcontext'>
@@ -533,7 +544,7 @@ export default class Index extends Component {
          </View>
 
          {/* 类别 */}
-        <View id={'category@@' + item.id} className='itemcontext'>
+        {/* <View id={'category@@' + item.id} className='itemcontext'>
           <select id={'category@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
             <option value="">---</option>
             {
@@ -542,6 +553,18 @@ export default class Index extends Component {
                 { if (item.category == cate) return <option value={cate} selected>{cate}</option>  }
               })
             }   
+          </select>
+        </View> */}
+
+        <View id={'work_effect@@'+item.id}   className='itemcontext'>
+          <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
+            <option value="">---</option>
+            {
+              this.state.maintask.map((itemTask)=>{
+                { if (item.work_effect != itemTask.title) return <option value={itemTask.title}>{itemTask.title}</option>  }
+                { if (item.work_effect == itemTask.title) return <option value={itemTask.title} selected>{itemTask.title}</option>  }
+              })
+            }    
           </select>
         </View>
 
@@ -566,7 +589,7 @@ export default class Index extends Component {
           </select>
         </View>
 
-         <View id={'work_effect@@'+item.id}   className='itemcontext'>
+         {/* <View id={'work_effect@@'+item.id}   className='itemcontext'>
           <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
             <option value="">---</option>
             {
@@ -576,7 +599,7 @@ export default class Index extends Component {
               })
             }    
           </select>
-        </View>
+        </View> */}
 
 
          <View id={'work_myself@@' + item.id} className='itemcontext'>
@@ -603,7 +626,7 @@ export default class Index extends Component {
          </View>
 
          {/* 类别 */}
-        <View id={'category@@' + item.id} className='itemcontext'>
+        {/* <View id={'category@@' + item.id} className='itemcontext'>
           <select id={'category@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
             <option value="">---</option>
             {
@@ -612,6 +635,18 @@ export default class Index extends Component {
                 { if (item.category == cate) return <option value={cate} selected>{cate}</option>  }
               })
             }   
+          </select>
+        </View> */}
+
+        <View id={'work_effect@@'+item.id}   className='itemcontext'>
+          <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
+            <option value="">---</option>
+            {
+              this.state.maintask.map((itemTask)=>{
+                { if (item.work_effect != itemTask.title) return <option value={itemTask.title}>{itemTask.title}</option>  }
+                { if (item.work_effect == itemTask.title) return <option value={itemTask.title} selected>{itemTask.title}</option>  }
+              })
+            }    
           </select>
         </View>
 
@@ -623,6 +658,8 @@ export default class Index extends Component {
          <View id={'work_content@@'+item.id}  className='itemcontext itemcontext_long'>
             <Textarea className='itemcontext_longinput textarea' id={'work_content@@'+item.id+'@@input'}  onBlur={this.updatetextarea.bind(this)}  value={item.work_content}  ></Textarea>
          </View>
+
+         
 
          <View id={'work_efficiency@@' + item.id} className='itemcontext'>
           <select id={'work_efficiency@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
@@ -636,17 +673,7 @@ export default class Index extends Component {
           </select>
         </View>
 
-         <View id={'work_effect@@'+item.id}   className='itemcontext'>
-          <select id={'work_effect@@' + item.id} className='select_item' name="select_name" onChange={this.onCategoryChange}>  
-            <option value="">---</option>
-            {
-              this.state.maintask.map((itemTask)=>{
-                { if (item.work_effect != itemTask.title) return <option value={itemTask.title}>{itemTask.title}</option>  }
-                { if (item.work_effect == itemTask.title) return <option value={itemTask.title} selected>{itemTask.title}</option>  }
-              })
-            }    
-          </select>
-        </View>
+         
 
 
          <View id={'work_myself@@' + item.id} className='itemcontext'>
@@ -672,11 +699,12 @@ let title2 = <View className='itemtitleplus' id='ScrollView222'>
                 {/* {itemtitle} */}
                 <View className='itemtitle itemtitletime'>时间</View>
                 <View className='itemtitle' >{'时长(分)'}</View>
-                <View className='itemtitle' >{'类别'}</View>
+                <View className='itemtitle' >{'对应目标'}</View>
+                {/* <View className='itemtitle' >{'类别'}</View> */}
                 <View className='itemtitle itemtitle_long_project'>{'工作项目'}</View>
                 <View className='itemtitle itemtitle_long'>{'工作内容及说明'}</View>
                 <View className='itemtitle' >{'效率自评'}</View>
-                <View className='itemtitle' >{'对应目标'}</View>
+                
                 <View className='itemtitle itemcontextright' >{'驱动自评'}</View>
               </View>
             </View>

@@ -165,8 +165,12 @@ export default class Index extends Component {
             {item.length_time}
          </View>
          {/* 类别 */} 
-         <View id={'category@@'+item.id}  className='itemcontext-his'>
+         {/* <View id={'category@@'+item.id}  className='itemcontext-his'>
             {item.category}
+         </View> */}
+         {/* 时间 */}
+         <View id={'work_effect@@'+item.id}   className='itemcontext-his'>
+          {item.work_effect}
          </View>
 
           {/* 时间 */} 
@@ -181,10 +185,7 @@ export default class Index extends Component {
          <View id={'work_efficiency@@'+item.id}   className='itemcontext-his'>
           {item.work_efficiency} 
          </View>
-          {/* 时间 */}
-         <View id={'work_effect@@'+item.id}   className='itemcontext-his'>
-          {item.work_effect}
-         </View>
+          
           {/* 时间 */}
          <View id={'work_myself@@'+item.id}  className='itemcontext-his itemcontextright'>
             {item.work_myself}
@@ -203,11 +204,12 @@ let title2 = <View className='itemtitleplus' id='ScrollView222'   >
               {/* {itemtitle} */}
               <View className='itemtitle-his itemtitletime'>时间</View>
               <View className='itemtitle-his' >{'时长(分)'}</View>
-              <View className='itemtitle-his' >{'类别'}</View>
+              {/* <View className='itemtitle-his' >{'类别'}</View> */}
+              <View className='itemtitle-his' >{'对应目标'}</View>
               <View className='itemtitle-his itemtitle_long_project'>{'工作项目'}</View>
               <View className='itemtitle-his itemtitle_long'>{'工作内容及说明'}</View>
               <View className='itemtitle-his' >{'效率自评'}</View>
-              <View className='itemtitle-his' >{'对应目标'}</View>
+              
               <View className='itemtitle-his itemcontextright' >{'驱动自评'}</View>
             </View>
 
